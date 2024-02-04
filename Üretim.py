@@ -24,7 +24,7 @@ st.set_page_config(
 container = """
         <style>
                .block-container {
-                    padding-top: 2rem;
+                    padding-top: 2.5rem;
                     padding-bottom: 2.5rem;
                     padding-left: 1rem;
                     padding-right: 1rem;
@@ -65,10 +65,11 @@ else:
     selected_df = df
 
 shown_dataframe = selected_df.reset_index(drop=True).drop(
-    ['Yıl', 'Haftanın günü', 'Ay', 'Saat', 'Gün'], axis = 1).set_index("Tarih")
+    ['Yıl', 'Haftanın günü', 'Ay', 'Saat', 'Gün', 'Yıl günü'], axis = 1).set_index("Tarih")
 
 
-type_ = st.sidebar.selectbox("Sütun",list(shown_dataframe.columns), index = 0, disabled=False)
+type_ = st.sidebar.selectbox("Sütun",list(
+    shown_dataframe.drop(['Hafta sonu', 'Tatiller'], axis = 1).columns), index = 0, disabled=False)
 
 weekends = st.sidebar.checkbox("Hafta sonu dahil", value = True)
 if weekends != True:
@@ -210,5 +211,4 @@ else:
 
 
 ### Footer
-components.html(footer, height = 300)
-
+components.html(footer, height = 400)
